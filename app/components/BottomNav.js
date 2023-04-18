@@ -5,38 +5,36 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const BottomNav = () => {
-  const [activeTab, setActiveTab] = useState("home");
-
+const BottomNav = ({ navigation, activeTab }) => {
   const handleTabPress = (tab) => {
-    setActiveTab(tab);
+    navigation.navigate(tab);
   };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.tabButton]}
-        onPress={() => handleTabPress("home")}
+        onPress={() => handleTabPress("Home")}
       >
         <Feather
           name="home"
           size={24}
           color="black"
           style={{
-            color: activeTab === "home" ? "green" : "black",
+            color: activeTab === "Home" ? "green" : "black",
           }}
         />
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.tabButton]}
-        onPress={() => handleTabPress("home")}
+        onPress={() => handleTabPress("AddText")}
       >
         <MaterialIcons
           name="add-circle-outline"
           size={26}
           color="black"
           style={{
-            color: activeTab === "add-new" ? "green" : "black",
+            color: activeTab === "AddText" ? "green" : "black",
           }}
         />
       </TouchableOpacity>

@@ -6,7 +6,7 @@ import BottomNav from "../components/BottomNav";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const handleBack = () => {
     // Handle the back button press
   };
@@ -53,7 +53,7 @@ const Home = () => {
           percentage={dataArray[0].percentage}
         ></TextData> */}
       </ScrollView>
-      <BottomNav></BottomNav>
+      <BottomNav navigation={navigation} activeTab={"Home"}></BottomNav>
     </View>
   );
 };

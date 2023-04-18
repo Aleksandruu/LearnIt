@@ -11,7 +11,7 @@ import {
   Text,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-const AddText = () => {
+const AddText = ({ navigation }) => {
   const handleBack = () => {
     // Handle the back button press
   };
@@ -58,7 +58,7 @@ const AddText = () => {
           </TouchableOpacity>
         </View>
       </View>
-      <BottomNav></BottomNav>
+      <BottomNav navigation={navigation} activeTab={"AddText"}></BottomNav>
     </View>
   );
 };

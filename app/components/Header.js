@@ -7,7 +7,10 @@ import {
   Platform,
 } from "react-native";
 
-const Header = ({ title, onPressBack }) => {
+const Header = ({ navigation, title, back }) => {
+  onPressBack = () => {
+    navigation.navigate(back);
+  };
   return (
     <SafeAreaView
       style={{
@@ -19,6 +22,14 @@ const Header = ({ title, onPressBack }) => {
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
+      {back && (
+        <TouchableOpacity
+          onPress={onPressBack}
+          style={{ paddingLeft: 12, color: "green" }}
+        >
+          <Text>Back</Text>
+        </TouchableOpacity>
+      )}
       <Text style={{ fontSize: 24, fontWeight: 500 }}>{title}</Text>
     </SafeAreaView>
   );

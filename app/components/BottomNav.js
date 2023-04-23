@@ -3,8 +3,6 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
 const BottomNav = ({ navigation, activeTab }) => {
   const handleTabPress = (tab) => {
     navigation.navigate(tab);
@@ -40,27 +38,27 @@ const BottomNav = ({ navigation, activeTab }) => {
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.tabButton]}
-        onPress={() => handleTabPress("statistics")}
+        onPress={() => handleTabPress("Statistics")}
       >
         <Ionicons
           name="ios-stats-chart-outline"
           size={24}
           color="black"
           style={{
-            color: activeTab === "statistics" ? "green" : "black",
+            color: activeTab === "Statistics" ? "green" : "black",
           }}
         />
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.tabButton]}
-        onPress={() => handleTabPress("settings")}
+        onPress={() => handleTabPress("Settings")}
       >
         <Feather
           name="settings"
           size={24}
           color="black"
           style={{
-            color: activeTab === "settings" ? "green" : "black",
+            color: activeTab === "Settings" ? "green" : "black",
           }}
         />
       </TouchableOpacity>

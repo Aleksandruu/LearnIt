@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import TextData from "../components/TextData";
 import BottomNav from "../components/BottomNav";
+import { KeyboardAvoidingView } from "react-native";
 import {
   TouchableOpacity,
   View,
@@ -11,12 +12,31 @@ import {
   Text,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// Usage:
+
 const AddText = ({ navigation }) => {
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
+  const [fileCounter, setFileCounter] = useState(0);
+
   const handleBack = () => {
     // Handle the back button press
   };
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+
+  useEffect(() => {
+    const loadCounter = async () => {
+      try {
+        const storedCounter = await AsyncStorage.getItem("fileCounter");
+        if (storedCounter !== null) {
+          setFileCounter(parseInt(storedCounter));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadCounter();
+  }, []);
 
   const handleTextChange = (newText) => {
     setText(newText);
@@ -24,20 +44,39 @@ const AddText = ({ navigation }) => {
   const handleTitleChange = (newTitle) => {
     setTitle(newTitle);
   };
-  let key = 0;
-  const handleSubmit = async () => {
+
+  const saveFormData = async () => {
+    const key = `file:${fileCounter + 1}`;
+    const formData = {
+      title: title,
+      text: text,
+      percentage: 0,
+    };
+
     try {
-      const textData = { title: title, text: text, percentage: 0, key: key };
-      key++;
-      await AsyncStorage.setItem("textData", JSON.stringify(textData));
-      console.log("Data saved successfully!");
+      await AsyncStorage.setItem(key, JSON.stringify(formData));
+      setFileCounter(fileCounter + 1);
+      await AsyncStorage.setItem("fileCounter", `${fileCounter + 1}`);
+      // clear form data after submission
+      setTitle("");
+      setText("");
     } catch (error) {
-      console.log("Error saving data:", error);
+      console.log(error);
     }
+  };
+  clearAsyncStorage = async () => {
+    AsyncStorage.clear();
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // form validation logic
+    // ...
+    saveFormData();
   };
   return (
     <View>
       <Header title="Add a new text" onPressBack={handleBack} />
+
       <View style={{ height: Dimensions.get("window").height - 110 }}>
         <View style={styles.container}>
           <TextInput
@@ -58,6 +97,7 @@ const AddText = ({ navigation }) => {
           </TouchableOpacity>
         </View>
       </View>
+
       <BottomNav navigation={navigation} activeTab={"AddText"}></BottomNav>
     </View>
   );
@@ -68,6 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "space-around",
     alignItems: "center",
+    height: Dimensions.get("window").height - 110,
   },
   titleInput: {
     padding: 10,

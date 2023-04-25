@@ -92,7 +92,7 @@ const AddText = ({ navigation }) => {
             onChangeText={handleTextChange}
             value={text}
           />
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+          <TouchableOpacity onPress={handleSubmit}>
             <Text style={styles.submitButtonText}>Save</Text>
           </TouchableOpacity>
         </View>

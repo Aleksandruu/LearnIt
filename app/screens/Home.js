@@ -45,12 +45,22 @@ const Home = ({ navigation }) => {
       <Header title="Choose a file to learn" />
       <ScrollView style={{ height: Dimensions.get("window").height - 110 }}>
         {data.map((item) => (
-          <TextData
+          <TouchableOpacity
             key={item.key}
-            text={item.text}
-            title={item.title}
-            percentage={item.percentage}
-          />
+            onPress={() => {
+              const itemData = data.find((x) => x.key == item.key);
+              navigation.navigate("LearnOptions", {
+                data: itemData,
+              });
+            }}
+          >
+            <TextData
+              key={item.key}
+              text={item.text}
+              title={item.title}
+              percentage={item.percentage}
+            />
+          </TouchableOpacity>
         ))}
       </ScrollView>
       <BottomNav navigation={navigation} activeTab={"Home"} />

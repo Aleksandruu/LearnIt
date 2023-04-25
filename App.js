@@ -5,6 +5,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Settings from "./app/screens/Settings";
 import Statistics from "./app/screens/Statistics";
+import FillTheBlanksScreen from "./app/screens/FillTheBlanksScreen";
+import ReorderScreen from "./app/screens/ReorderScreen";
+import ChooseRightFormScreen from "./app/screens/ChooseRightFormScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -24,6 +27,21 @@ export default function App() {
         <Stack.Screen
           name="LearnOptions"
           component={LearnOptions}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FillTheBlanksScreen"
+          component={FillTheBlanksScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ReorderScreen"
+          component={ReorderScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ChooseRightFormScreen"
+          component={ChooseRightFormScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

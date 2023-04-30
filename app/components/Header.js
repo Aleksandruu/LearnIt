@@ -7,8 +7,9 @@ import {
   Platform,
   View,
 } from "react-native";
+import { SimpleLineIcons } from "@expo/vector-icons";
 
-const Header = ({ navigation, title, back }) => {
+const Header = ({ navigation, title, back, edit, setEdit, editEnable }) => {
   onPressBack = () => {
     if (back !== 1) {
       navigation.navigate(back);
@@ -21,13 +22,14 @@ const Header = ({ navigation, title, back }) => {
       style={{
         flexDirection: "row",
         alignItems: "flex-end",
-        justifyContent: back ? "space-between" : "center",
+        justifyContent: back || editEnable ? "space-between" : "center",
         paddingBottom: 10,
         height: 80,
         width: 390,
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
       }}
     >
+      {!back && <View style={{ width: 15 }}></View>}
       {back && (
         <TouchableOpacity
           onPress={onPressBack}
@@ -39,7 +41,12 @@ const Header = ({ navigation, title, back }) => {
         </TouchableOpacity>
       )}
       <Text style={{ fontSize: 24, fontWeight: 500 }}>{title}</Text>
-      <View style={{ width: back ? 40 : 0, height: 10 }}></View>
+      {back && <View style={{ width: 30 }}></View>}
+      {editEnable && (
+        <TouchableOpacity onPress={() => setEdit(!edit)}>
+          <SimpleLineIcons name="options-vertical" size={16} color="black" />
+        </TouchableOpacity>
+      )}
     </SafeAreaView>
   );
 };

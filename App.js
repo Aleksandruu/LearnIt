@@ -8,6 +8,8 @@ import Statistics from "./app/screens/Statistics";
 import FillTheBlanksScreen from "./app/screens/FillTheBlanksScreen";
 import ReorderScreen from "./app/screens/ReorderScreen";
 import ChooseRightFormScreen from "./app/screens/ChooseRightFormScreen";
+import EditScreen from "./app/screens/EditScreen";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +24,11 @@ export default function App() {
         <Stack.Screen
           name="AddText"
           component={AddText}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EditScreen"
+          component={EditScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -15,9 +15,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Usage:
 
-const AddText = ({ navigation }) => {
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+const EditScreen = ({ navigation, route }) => {
+  const { data } = route.params;
+  console.log(data);
+  const [title, setTitle] = useState(data.title);
+  const [text, setText] = useState(data.text);
   const [fileCounter, setFileCounter] = useState(0);
 
   const handleBack = () => {
@@ -46,17 +48,15 @@ const AddText = ({ navigation }) => {
   };
 
   const saveFormData = async () => {
-    const key = `file:${fileCounter + 1}`;
+    const key = data.key;
     const formData = {
       title: title,
       text: text,
-      percentage: 0,
+      percentage: data.percentage,
     };
 
     try {
       await AsyncStorage.setItem(key, JSON.stringify(formData));
-      setFileCounter(fileCounter + 1);
-      await AsyncStorage.setItem("fileCounter", `${fileCounter + 1}`);
       // clear form data after submission
       setTitle("");
       setText("");
@@ -64,30 +64,20 @@ const AddText = ({ navigation }) => {
       console.log(error);
     }
   };
-  clearAsyncStorage = async () => {
-    AsyncStorage.clear();
-  };
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (title.length < 3) {
-      console.log("titlu scurt");
-    }
-    if (title.length > 35) {
-      console.log("titlu lung");
-    }
-    let nrCuv = text.split(" ").filter((word) => word !== "").length;
-    console.log(nrCuv);
-    if (nrCuv < 7) {
-      console.log("text scurt");
-    }
-    if (nrCuv > 500) {
-      console.log("text lung");
-    }
+    // form validation logic
+    // ...
     saveFormData();
   };
   return (
     <View>
-      <Header title="Add a new text" onPressBack={handleBack} />
+      <Header
+        navigation={navigation}
+        title="Edit your text"
+        back={"Home"}
+        onPressBack={handleBack}
+      />
 
       <View style={{ height: Dimensions.get("window").height - 110 }}>
         <View style={styles.container}>
@@ -110,7 +100,7 @@ const AddText = ({ navigation }) => {
         </View>
       </View>
 
-      <BottomNav navigation={navigation} activeTab={"AddText"}></BottomNav>
+      <BottomNav navigation={navigation} activeTab={"Home"}></BottomNav>
     </View>
   );
 };
@@ -146,4 +136,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddText;
+export default EditScreen;

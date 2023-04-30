@@ -6,13 +6,15 @@ import BottomNav from "../components/BottomNav";
 import { Dimensions } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import { useEffect } from "react";
 
 const Home = ({ navigation }) => {
   const handleBack = () => {
     // Handle the back button press
   };
-
+  const [edit, setEdit] = useState(false);
   const [data, setData] = useState([]);
+  const [solved, setSolved] = useState(false);
 
   const fetchData = useCallback(async () => {
     try {
@@ -36,13 +38,19 @@ const Home = ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
+      setEdit(false);
       fetchData();
     }, [fetchData])
   );
-
+  // console.log(data);
   return (
     <View>
-      <Header title="Choose a file to learn" />
+      <Header
+        title="Choose a file to learn"
+        edit={edit}
+        setEdit={setEdit}
+        editEnable={true}
+      />
       <ScrollView style={{ height: Dimensions.get("window").height - 110 }}>
         {data.map((item) => (
           <TouchableOpacity
@@ -55,10 +63,14 @@ const Home = ({ navigation }) => {
             }}
           >
             <TextData
-              key={item.key}
+              kk={item.key}
               text={item.text}
               title={item.title}
               percentage={item.percentage}
+              edit={edit}
+              data={data}
+              setData={setData}
+              navigation={navigation}
             />
           </TouchableOpacity>
         ))}

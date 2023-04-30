@@ -2,7 +2,6 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 const FillTheBlanks = ({ data, navigation }) => {
-  console.log(data);
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 20, fontWeight: 500 }}>Fill The Blanks</Text>
